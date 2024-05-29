@@ -99,7 +99,7 @@ const ProfilePage = () => {
                 </div>
             </div>
 
-            <div className="flex flex-1 md:h-screen overflow-y-auto justify-center" ><WishList /></div>
+            <div className="flex flex-1 md:h-screen overflow-y-auto justify-center" ><PersonalInfo /></div>
 
         </div>
     );

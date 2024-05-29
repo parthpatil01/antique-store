@@ -1,9 +1,10 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import '../Checkout/Cart/scroll.css'
 
 export default function OrderHistory() {
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white">
+    <div className="max-w-4xl mx-auto p-8 bg-white overflow-x-auto" id='style-2'>
       <h1 className="text-2xl font-bold mb-4">Order History</h1>
       <p className="mb-8">
         Check the status of recent orders, manage returns, and discover similar products.
@@ -24,8 +25,8 @@ export default function OrderHistory() {
               <div>$160.00</div>
             </div>
             <div className="flex space-x-2">
-              <button className="px-4 py-2 border rounded-md hover:bg-gray-100">View Order</button>
-              <button className="px-4 py-2 border rounded-md hover:bg-gray-100">View Invoice</button>
+              <button className=" hover:bg-gray-100"><span className="border px-4 py-2 rounded-md">View Order</span></button>
+              <button className=" hover:bg-gray-100"><span className="px-4 py-2 border rounded-md">View Invoice</span></button>
             </div>
           </div>
           <div className="space-y-6"> {/* Increased the space between items */}

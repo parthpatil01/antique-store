@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
-import { useState,useEffect } from "react";
-import { Link,useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../Assets/logo.png";
 import './Header.css';
 import profile from "../Assets/profile.jpg";
@@ -19,10 +19,12 @@ function Header() {
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState(location.pathname);
   const navigation = [
-    { name: 'Home', to: '/', current: location.pathname === '/'},
-    { name: 'Shop', to: '/shop', current: location.pathname === '/shop' },
+    { name: 'Home', to: '/', current: location.pathname === '/' },
+    { name: 'shop', to: '#', current: location.pathname === '/shop' },
     { name: 'Projects', to: '#', current: false },
     { name: 'Calendar', to: '#', current: false },
+    // { name: 'options', to: '/options', current: location.pathname === '/options' },
+
   ]
 
   useEffect(() => {
@@ -58,23 +60,24 @@ function Header() {
                 <div className="hidden sm:mt-2 lg:mt-0 lg:ml-40 sm:ml-6 md:block ">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.to}
-                        aria-current={currentPath === item.to ? 'page' : undefined}
-                        className={classNames(
-                          item.current ? 'text-amber-700 font-bold' : 'text-black-300 hover:text-gray-500',
-                          'rounded-md px-3 py-2 text-m font-medium'
-                        )}
-                      >
-                        {item.name}
-                      </Link>
+                      
+                        <Link
+                          key={item.name}
+                          to={item.to}
+                          aria-current={currentPath === item.to ? 'page' : undefined}
+                          className={classNames(
+                            item.current ? 'text-customBrown font-bold' : 'text-black-300 hover:text-gray-500',
+                            'rounded-md px-3 py-2 text-m font-medium flex items-center'
+                          )}
+                        >
+                         {item.name !== 'shop' ? item.name : <Dropdown />}
+                        </Link>
+
                     ))}
-                    
-                    <Dropdown />
+
 
                     {/* search */}
-                    <div className="relative w-[400px] search-l">
+                    <div className="relative w-[400px] search-l flex items-center">
                       <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -167,7 +170,7 @@ function Header() {
                   {item.name}
                 </Disclosure.Button>
               ))}
-              
+
               <Dropdown />
 
               {/* search */}

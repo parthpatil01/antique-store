@@ -12,7 +12,7 @@ export default function ShoppingGrid() {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("https://grand-vivacious-lemur.glitch.me/api/products");
+      const response = await axios.get("https://antique-store-backend.vercel.app/api/products");
       console.log(response.data);
       setProducts(response.data);
       setLoading(false);
@@ -35,7 +35,7 @@ export default function ShoppingGrid() {
               <Link to={`/product-detail/${product._id}`} className="group" key={product._id}>
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                   <img
-                    src={product.imagePath}
+                    src={product.images[0]}
                     alt={product.name}
                     className="h-full w-full md:h-[300px] md:w-[300px] bg-gray-50 object-cover object-center group-hover:opacity-75"
                   />

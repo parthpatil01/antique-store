@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -10,8 +11,8 @@ export default function Dropdown() {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md  px-3 py-2 text-m font-medium text-black-300  hover:text-gray-500">
-          Options
+        <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md py-2 text-m font-medium text-black-300  hover:text-gray-500">
+          Shop
           <ChevronDownIcon className="-mr-1 h-5 w-5 text-black-400" aria-hidden="true" />
         </Menu.Button>
       </div>
@@ -29,15 +30,15 @@ export default function Dropdown() {
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <Link
+                  to="/shop?category=animal"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                  Account settings
-                </a>
+                  zoomorphic artifacts
+                </Link>
               )}
             </Menu.Item>
             <Menu.Item>

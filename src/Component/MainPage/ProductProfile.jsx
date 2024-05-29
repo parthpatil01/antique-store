@@ -1,7 +1,6 @@
-
 import './ProductProfile.css';
 import { IonIcon } from '@ionic/react';
-import { chevronBack, chevronForward, removeOutline, addOutline, bagHandleOutline } from 'ionicons/icons';
+import { chevronBack, chevronForward, removeOutline, addOutline, bagHandleOutline, heartCircleOutline } from 'ionicons/icons';
 import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
@@ -20,7 +19,7 @@ export default function ProductProfile() {
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/products/${id}`);
+                const response = await axios.get(`https://antique-store-backend.vercel.app/api/products/${id}`);
                 setProduct(response.data);
                 setPrice(response.data.price*(1 -discountPercentage/100));
                  // Set the fetched product data
@@ -33,20 +32,11 @@ export default function ProductProfile() {
     }, [id]); // Trigger the effect when the ID changes
 
     // Function to increase product quantity
-    const increaseProductQty = () => {
-        if(quantity<10){
-            setQuantity(quantity + 1);
-
-        }
+    const handleWishlish = () => {
+    
         
     };
 
-    // Function to decrease product quantity
-    const decreaseProductQty = () => {
-        if (quantity > 1) {
-            setQuantity(quantity - 1);
-        }
-    };
 
     const slideToNext = () => {
         if (sliderPos < totalSliderItems - 1) {
@@ -110,36 +100,27 @@ export default function ProductProfile() {
 
                     <p className="product-subtitle">The Antique Store</p>
 
-                    <h1 className="h1 product-title">Limited Edition Statue</h1>
+                    <h1 className="h1 product-title">{product.name}</h1>
 
                     <p className="product-text">
-                        These low-profile sneakers are your perfect casual wear companion. Featuring a
-                        durable rubber outer sole, they’ll withstand everything the weather can offer.
+                        {product.description}
                     </p>
 
                     <div className="wrapper">
 
-                        <span className="price" >${price}</span>
+                        <span className="price" >₹ {product.price}</span>
 
-                        <span className="badge">{discountPercentage}%</span>
+                       {product.discount!=0 && <span className="badge">{product.discount}%</span>}
 
-                        <del className="del">{product.price}</del>
+                        {product.discount!=0 && <del className="del">{product.price - product.price*(product.discount/100)}</del>}
 
                     </div>
 
                     <div className="btn-group">
 
                         <div className="counter-wrapper">
-
-                            <button className="counter-btn" onClick={decreaseProductQty}>
-                                <IonIcon icon={removeOutline} />
-                            </button>
-
-                            <span className="price">{quantity}</span>
-
-                            <button className="counter-btn" onClick={increaseProductQty}>
-                                <IonIcon icon={addOutline} />
-
+                            <button className="counter-btn" onClick={handleWishlish}>
+                                <IonIcon icon={heartCircleOutline} />
                             </button>
 
                         </div>

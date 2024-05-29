@@ -14,6 +14,11 @@ import ProductProfile from './Component/MainPage/ProductProfile.jsx';
 import Checkout from './Component/Checkout/Cart/Checkout.jsx';
 import WishList from './Component/ProfilePage/Wishlist.jsx'
 import Contact from './Component/MainPage/Contact.jsx';
+import Login from './Component/Registration/Login.jsx';
+import SignUp from './Component/Registration/SignUp.jsx';
+import EmailVerification from './Component/Registration/EmailVerification.jsx';
+import ForgotPassword from './Component/Registration/ForgotPassword.jsx';
+import ResetPassoword from './Component/Registration/ResetPassword.jsx';
 
 
 function App() {
@@ -33,6 +38,11 @@ function App() {
       <div className='flex flex-col justify-center items-center min-h-screen '>
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/log-in" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/email-verify" element={<EmailVerification />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassoword />} />
           <Route path="/shop" element={<ShoppingGrid />} />
           <Route path="/product-detail/:id" element={<ProductProfile />} />
           <Route path="/checkout" element={<Checkout />} />
@@ -41,9 +51,6 @@ function App() {
           <Route path="/wishlist" element={<WishList/>}/>
           <Route path="/contact-us" element={<Contact/>}/>
 
-
-
-         
         </Routes>
       </div>
       {!hideHeaderFooter && <Footer />}

@@ -83,7 +83,7 @@ export default function PersonalInfo() {
 
   return (
 
-    <div className='mx-10 md:mx-12 lg:mx-auto pt-12 md:pt-24' >
+    <div className='mx-10 md:mx-12 lg:mx-auto pt-12 md:pt-12' >
       <form onSubmit={handleSubmit}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-4">
@@ -285,7 +285,7 @@ export default function PersonalInfo() {
           </button>
           <button
             type="submit"
-            className="rounded-md bg-[#873E23] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#A94E2D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="rounded-md bg-customBrown px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#A94E2D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Save
           </button>
