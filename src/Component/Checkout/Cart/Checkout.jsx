@@ -76,7 +76,7 @@ async function displayRazorpay() {
         return;
     }
 
-    const result = await axios.post("http://localhost:5000/api/users/payment",{
+    const result = await axios.post("https://antique-store-backend.vercel.app/api/users/payment",{
       amount: 1000, // Dynamically set the amount here (e.g., 50000 for INR 500.00)
   });
 

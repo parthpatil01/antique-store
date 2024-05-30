@@ -90,7 +90,7 @@ export default function CarouselSlidesOnly() {
         </div>
       </section>
 
-      <section className="w-full mt-5 py-5 sm:py-5 md:py-5 xl:py-10 bg-gray-50">
+      <section className="w-full mt-5 py-5 sm:py-5 md:py-5 xl:py-10 ">
       
           <div className="m-2 flex justify-center md:justify-center">
             <div >
