@@ -19,6 +19,8 @@ import SignUp from './Component/Registration/SignUp.jsx';
 import EmailVerification from './Component/Registration/EmailVerification.jsx';
 import ForgotPassword from './Component/Registration/ForgotPassword.jsx';
 import ResetPassoword from './Component/Registration/ResetPassword.jsx';
+import { useSelector } from 'react-redux';
+import { selectIsAuthenticated } from './Component/slices/authSlice.js';
 
 
 function App() {
@@ -31,6 +33,7 @@ function App() {
 
   const location = useLocation();
   const hideHeaderFooter = location.pathname === '/profile';
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   return (
     <div>
@@ -47,7 +50,7 @@ function App() {
           <Route path="/product-detail/:id" element={<ProductProfile />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/profile" element={<ProfilePage/>}/>
+          <Route path="/profile" element={ isAuthenticated ? <ProfilePage/> : <Login/> }/>
           <Route path="/wishlist" element={<WishList/>}/>
           <Route path="/contact-us" element={<Contact/>}/>
 

@@ -34,9 +34,9 @@ export default function WishList() {
         <h2 className="font-manrope font-bold text-xl min-[400px]:text-2xl text-black mb-8 ">Wishlist</h2>
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-12">
           {products.map((product) => (
-             <Link to={`/product-detail/${product._id}`} className="group " key={product._id}>
+             <Link to={`/product-detail/${product._id}`} className="group " key={product._id} target="_blank">
               <div className="w-full max-w-sm aspect-square">
-                <img src={product.imagePath} alt={product.name} className="object-fit w-full h-full md:w-[200px] md:h-[200px] rounded-xl" />
+                <img src={product.images[0]} alt={product.name} className="object-fit w-full h-full md:w-[200px] md:h-[200px] rounded-xl" />
               </div>
               <div className="mt-5 flex items-center justify-between ">
                 <div>

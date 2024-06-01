@@ -5,7 +5,7 @@ export const loginAsync = createAsyncThunk(
   'auth/login',
   async ({ email, password }) => {
     try {
-      const response = await axios.post('https://antique-store-backend.vercel.app/api/users/login', {
+      const response = await axios.post('http://localhost:5000/api/users/login', {
         email,
         password,
       });
@@ -21,7 +21,7 @@ export const authSlice = createSlice({
   initialState: {
     email: localStorage.getItem('email') || null,
     token: localStorage.getItem('token') || null,
-    isAuthenticated: localStorage.getItem('token') ? true : false,
+    isAuthenticated: localStorage.getItem('token')?.length>0 ? true : false,
     loading: false,
     error: null, // Add error field to store error messages
   },

@@ -37,6 +37,18 @@ export default function ProductProfile() {
         
     };
 
+    function formatIndianCurrency(number) {
+        const [integer, decimal] = number.toString().split('.');
+        let lastThree = integer.slice(-3);
+        const otherNumbers = integer.slice(0, -3);
+    
+        if (otherNumbers !== '') {
+            lastThree = ',' + lastThree;
+        }
+        const result = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+        return `₹${result}${decimal ? '.' + decimal : ''}`;
+    }
+
 
     const slideToNext = () => {
         if (sliderPos < totalSliderItems - 1) {
@@ -108,11 +120,11 @@ export default function ProductProfile() {
 
                     <div className="wrapper">
 
-                        <span className="price" >₹ {product.price}</span>
+                        <span className="price" >{formatIndianCurrency(product.price - product.price*(product.discount/100))}</span>
 
                        {product.discount!=0 && <span className="badge">{product.discount}%</span>}
 
-                        {product.discount!=0 && <del className="del">{product.price - product.price*(product.discount/100)}</del>}
+                        {product.discount!=0 && <del className="del">{product.price}</del>}
 
                     </div>
 

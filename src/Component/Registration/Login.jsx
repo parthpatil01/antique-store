@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAsync, selectLoading, selectIsAuthenticated, selectError } from '../slices/authSlice';
 
@@ -10,12 +10,16 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const loginError = useSelector(selectError);
   const loading = useSelector(selectLoading);
-  const isAuthenticated = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const location = useLocation();
+  const currentUrl = location.pathname;
 
   const emailRegex = /^[a-zA-Z0-9+_.-]{4,}@[a-zA-Z0-9-]+\.[a-zA-Z0-9.]{2,5}$/;
   const passwordRegex = /[\w@#$%&*()_]{7,20}/;
+
+  console.log(currentUrl);
 
   const validate = () => {
     const newErrors = {};
@@ -36,15 +40,19 @@ const Login = () => {
     e.preventDefault();
     if (validate()) {
       dispatch(loginAsync({ email, password }));
+
     } else {
       console.log('Form is invalid');
     }
   };
 
-  // Redirect if user is authenticated
-  if (isAuthenticated) {
-    navigate('/');
-  }
+  useEffect(()=>{
+    if (isAuthenticated) {
+      navigate('/',{replace:true});
+    }
+  },[isAuthenticated])
+
+  
 
   return (
     <div className="lg:my-18 md:mt-20">
