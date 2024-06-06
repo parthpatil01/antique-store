@@ -7,11 +7,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Dropdown() {
+export default function Dropdown({ className }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md py-2 text-m font-medium text-black-300  hover:text-gray-500">
+        <Menu.Button className={classNames( "inline-flex w-full justify-center gap-x-1.5 rounded-md py-2 text-m font-medium text-black-300  hover:text-gray-500",className)}>
           Shop
           <ChevronDownIcon className="-mr-1 h-5 w-5 text-black-400" aria-hidden="true" />
         </Menu.Button>

@@ -63,8 +63,7 @@ function Header() {
                 <div className="hidden sm:mt-2 lg:mt-0 lg:ml-40 sm:ml-6 md:block ">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-
-                      <Link
+                      item.name !== 'shop' ? <Link
                         key={item.name}
                         to={item.to}
                         aria-current={currentPath === item.to ? 'page' : undefined}
@@ -73,8 +72,12 @@ function Header() {
                           'rounded-md px-3 py-2 text-m font-medium flex items-center'
                         )}
                       >
-                        {item.name !== 'shop' ? item.name : <Dropdown />}
-                      </Link>
+                        {item.name}
+                      </Link> : <Dropdown key={item.name} className={classNames(
+                currentPath.startsWith('/shop') ? 'text-customBrown font-bold' : 'text-black-300 hover:text-gray-500'
+              )}/>
+
+
 
                     ))}
 
@@ -130,7 +133,7 @@ function Header() {
                           </Link>
                         )}
                       </Menu.Item>
-                      
+
                       <Menu.Item>
                         {({ active }) => (
 
@@ -139,7 +142,7 @@ function Header() {
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             onClick={isAuthenticated ? () => { dispatch(logout()) } : () => { navigate('/log-in') }}
                           >
-                            {isAuthenticated?'Sign out':'Sign In'}
+                            {isAuthenticated ? 'Sign out' : 'Sign In'}
                           </a>
 
                         )}
