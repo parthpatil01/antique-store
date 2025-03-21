@@ -3,10 +3,11 @@ import { IonIcon } from '@ionic/react';
 import { chevronBack, chevronForward, bagHandleOutline,trashBinOutline, heartCircleOutline, heartCircle } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate  } from "react-router-dom";
 import makeRequestWithToken from '../../helper/makeRequestWithToken';
 import { useSelector } from 'react-redux';
-import { selectEmail } from '../slices/authSlice';
+import { selectEmail,selectIsAuthenticated  } from '../slices/authSlice';
+import formatIndianCurrency from '../../helper/formatIndianCurrency';
 
 export default function ProductProfile() {
 
@@ -17,7 +18,8 @@ export default function ProductProfile() {
     const email = useSelector(selectEmail)
     const [wishlistButtonDisabled, setWishlistButtonDisabled] = useState(false);
     const [cartButtonDisabled, setCartButtonDisabled] = useState(false);
-
+    const isAuthenticated = useSelector(selectIsAuthenticated); // Get authentication status
+    const navigate = useNavigate(); // To navigate to login page
     const [heart, setHeart] = useState(heartCircleOutline);
     const [cartIcon,setCartIcon] = useState(bagHandleOutline);
     const [cartText,setCartText] = useState('Add to cart');
@@ -46,7 +48,11 @@ export default function ProductProfile() {
 
     // Function to increase product quantity
     const handleWishlish = () => {
-
+        if (!isAuthenticated) {
+            // Redirect to login page if not authenticated
+            navigate('/log-in');
+            return;
+        }
         // Disable wishlist button
         setWishlistButtonDisabled(true);
 
@@ -72,7 +78,11 @@ export default function ProductProfile() {
     };
 
     const handleCart = () => {
-
+        if (!isAuthenticated) {
+            // Redirect to login page if not authenticated
+            navigate('/log-in');
+            return;
+        }
         // Disable wishlist button
         setCartButtonDisabled(true);
         console.log('clicked')
@@ -98,19 +108,6 @@ export default function ProductProfile() {
         }
 
     };
-
-    function formatIndianCurrency(number) {
-        const [integer, decimal] = number.toString().split('.');
-        let lastThree = integer.slice(-3);
-        const otherNumbers = integer.slice(0, -3);
-
-        if (otherNumbers !== '') {
-            lastThree = ',' + lastThree;
-        }
-        const result = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
-        return `₹${result}${decimal ? '.' + decimal : ''}`;
-    }
-
 
     const slideToNext = () => {
         if (sliderPos < totalSliderItems - 1) {
@@ -201,7 +198,6 @@ export default function ProductProfile() {
 
                         <button className="cart-btn" disabled={cartButtonDisabled} onClick={handleCart}>
                             <IonIcon icon={cartIcon} />
-
                             <span className="span">{cartText}</span>
                         </button>
 

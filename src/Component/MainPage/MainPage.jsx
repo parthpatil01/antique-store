@@ -1,8 +1,8 @@
 import React from "react";
 import { TECarousel, TECarouselItem } from "tw-elements-react";
-import img1 from '../Assets/img_1.webp';
-import img2 from '../Assets/img_2.webp';
-import img3 from '../Assets/img_3.webp';
+import img1 from '../Assets/img_1.jpg';
+import img2 from '../Assets/img_2.jpg';
+import img3 from '../Assets/img_3.jpg';
 import img4 from '../Assets/img_4.webp';
 import img5 from '../Assets/img_5.webp';
 
@@ -10,7 +10,7 @@ import '../MainPage/MainPage.css';
 
 export default function CarouselSlidesOnly() {
 
-  function subscribeMail(){
+  function subscribeMail() {
     console.log('under construction...')
   }
 
@@ -23,39 +23,51 @@ export default function CarouselSlidesOnly() {
             itemID={1}
             className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
           >
-            <img
-              src={img1}
-              className="block w-[100vw]"
-              alt="img1"
-            />
+            <div className="relative">
+              <img
+                src={img1}
+                className="block w-[100vw]"
+                alt="img2"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+            </div>
 
-            <div className="absolute inset-x-[15%] inset-y-[40%] hidden py-5 text-center text-white md:block">
-              <h5 className="text-font">Art and craft as old as civilization</h5>
+            <div className="absolute inset-x-[15%] inset-y-[40%] hidden py-5 text-center text-white md:block ">
+              <h5 className="text-font" >Art and craft as old as civilization</h5>
             </div>
 
           </TECarouselItem>
+
           <TECarouselItem
             itemID={2}
             className="relative float-left hidden -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
           >
-            <img
-              src={img2}
-              className="block w-[100vw]"
-              alt="img2"
-            />
-            <div className="absolute inset-x-[15%] inset-y-[40%] hidden py-5 text-center text-white md:block">
-              <h5 className="text-font">Stories of monks and kings</h5>
+            <div className="relative">
+              <img
+                src={img2}
+                className="block w-[100vw]"
+                alt="img2"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+            </div>
+
+
+            <div className="absolute inset-x-[15%] inset-y-[40%] hidden py-5 text-center text-white md:block ">
+              <h5 className="text-font" >Stories of monks and kings</h5>
             </div>
           </TECarouselItem>
           <TECarouselItem
             itemID={3}
             className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
           >
-            <img
-              src={img3}
-              className="block w-[100vw]"
-              alt="img3"
-            />
+            <div className="relative">
+              <img
+                src={img3}
+                className="block w-[100vw]"
+                alt="img2"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+            </div>
             <div className="absolute inset-x-[15%] inset-y-[40%] hidden py-5 text-center text-white md:block">
               <h5 className="text-font">Five thousand years of unbroken legacy</h5>
             </div>
@@ -91,25 +103,25 @@ export default function CarouselSlidesOnly() {
       </section>
 
       <section className="w-full mt-5 py-5 sm:py-5 md:py-5 xl:py-10 ">
-      
-          <div className="m-2 flex justify-center md:justify-center">
-            <div >
-              <h5 className="text-4xl font-light mb-4 text-center">SIGN UP FOR OUR NEWS LETTER AND<br/> NEVER MISS A THING.</h5>
-            </div>
+
+        <div className="m-2 flex justify-center md:justify-center">
+          <div >
+            <h5 className="text-4xl font-light mb-4 text-center">SIGN UP FOR OUR NEWS LETTER AND<br /> NEVER MISS A THING.</h5>
           </div>
-          <div className="flex mt-10 mb-3 justify-center align-center md:justify-center">
-            <div className="md:w-10/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
-              <form className="flex justify-center " onSubmit={subscribeMail}>
-                <div className="md:w-6/12 ">
-                  <label htmlFor="email-newsletter-component" className="sr-only">Email Address</label>
-                  <input type="email" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:border-stone-500 focus:ring-stone-500" id="email-newsletter-component"  placeholder="Email Address" aria-label="Email Address" aria-describedby="email-newsletter-help" required />
-                </div>
-                <div className="md:w-3/12 ml-3 text-center lg:text-left">
-                  <button type="submit" className="w-full px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Subscribe</button>
-                </div>
-              </form>
-            </div>
+        </div>
+        <div className="flex mt-10 mb-3 justify-center align-center md:justify-center">
+          <div className="md:w-10/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
+            <form className="flex justify-center " onSubmit={subscribeMail}>
+              <div className="md:w-6/12 ">
+                <label htmlFor="email-newsletter-component" className="sr-only">Email Address</label>
+                <input type="email" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:border-stone-500 focus:ring-stone-500" id="email-newsletter-component" placeholder="Email Address" aria-label="Email Address" aria-describedby="email-newsletter-help" required />
+              </div>
+              <div className="md:w-3/12 ml-3 text-center lg:text-left">
+                <button type="submit" className="w-full px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Subscribe</button>
+              </div>
+            </form>
           </div>
+        </div>
       </section>
 
 

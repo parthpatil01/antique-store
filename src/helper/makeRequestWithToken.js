@@ -10,7 +10,7 @@ const makeRequestWithToken = async (url, method, data = null) => {
       Authorization: token ? `Bearer ${token}` : '',
     };
 
-    const baseURL = process.env.REACT_APP_API_URL;
+    const baseURL =  process.env.REACT_APP_API_URL;
     // Make the request with Axios
     const response = await axios({
       method,

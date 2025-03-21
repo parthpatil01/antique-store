@@ -5,10 +5,11 @@ export const loginAsync = createAsyncThunk(
   'auth/login',
   async ({ email, password }) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/users/login', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
         email,
         password,
       });
+      console.log(response)
       return response.data;
     } catch (error) {
       throw error.response.data; // Throw the error response data to be caught by rejected case
@@ -51,6 +52,8 @@ export const authSlice = createSlice({
         state.loading = false;
         localStorage.setItem('email', email);
         localStorage.setItem('token', token);
+        localStorage.setItem("selectedMenuItem", "PersonalInfo");
+
       })
       .addCase(loginAsync.rejected, (state, action) => {
         state.loading = false;

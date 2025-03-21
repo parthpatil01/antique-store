@@ -10,7 +10,7 @@ export default function ForgotPassword() {
     e.preventDefault();
     try {
       // Send request to backend to initiate password reset using Axios
-      const response = await axios.post('http://localhost:5000/api/users/reset-password', { email }, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/reset-password`, { email }, {
         headers: {
           'Content-Type': 'application/json',
         },

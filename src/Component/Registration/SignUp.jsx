@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import logo from '../Assets/logo.png'
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -56,7 +57,7 @@ const SignUp = () => {
                 lastName
             };
 
-            axios.post('http://localhost:5000/api/users/register', formData)
+            axios.post(`${process.env.REACT_APP_API_URL}/users/register`, formData)
                 .then(response => {
                     console.log('Success:', response.data);
                     setLoading(false);
@@ -80,7 +81,7 @@ const SignUp = () => {
                 <div className="lg:w-[30vw] md:w-[40vw] w-[90vw] mb-10 bg-[#f9f5eb] rounded-l-md p-6 flex flex-col">
                     <div className="text-center">
                         <img
-                            src='https://theantiquestory.com/cdn/shop/files/theantiquestory.com_indian_antiques_online_antiques_110x.png?v=1613692414'
+                            src={logo}
                             alt="logo"
                             className="mt-3 h-24 mx-auto"
                         />

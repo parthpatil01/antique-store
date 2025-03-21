@@ -4,11 +4,12 @@ import WishList from "./Wishlist";
 import Cart from '../Checkout/Cart/Cart'
 import wish from '../Assets/wishlist.svg'
 import person from '../Assets/person.svg'
-import order from '../Assets/order.svg'
+import cart from '../Assets/cart.svg'
+import order from '../Assets/orders.png';
 import OrderHistory from "./Orders";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectIsAuthenticated } from "../slices/authSlice";
+import { selectIsAuthenticated, logout } from "../slices/authSlice";
 
 
 
@@ -17,7 +18,13 @@ const ProfilePage = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const navigate = useNavigate();
     const isAuthenticated = useSelector(selectIsAuthenticated);
-    const [selectedMenuItem, setSelectedMenuItem] = useState("PersonalInfo");
+    const [selectedMenuItem, setSelectedMenuItem] = useState(localStorage.getItem("selectedMenuItem") || "PersonalInfo");
+    const dispatch = useDispatch();
+
+    // Save the selected menu item to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem("selectedMenuItem", selectedMenuItem);
+    }, [selectedMenuItem]);
 
     const toggleNav = () => {
         setIsNavOpen(!isNavOpen);
@@ -36,7 +43,7 @@ const ProfilePage = () => {
                 return <Cart />;
         }
     };
-    
+
 
 
     return (
@@ -75,48 +82,50 @@ const ProfilePage = () => {
                                 <div className="text-sm font-light tracking-wide text-gray-500">Menu</div>
                             </div>
                         </li>
-                        <li className={`flex justify-center md:justify-start focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4  hover:border-customBrown" ${selectedMenuItem==="PersonalInfo"?'border-customBrown':'border-transparent'}`} >
-                            <a href="#" className="relative flex flex-row items-center h-11 w-[150px] md:w-full  pr-2" onClick={()=>{setSelectedMenuItem('PersonalInfo')}}>
+                        <li className={`flex justify-center md:justify-start focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4  hover:border-customBrown" ${selectedMenuItem === "PersonalInfo" ? 'border-customBrown' : 'border-transparent'}`} >
+                            <a href="#" className="relative flex flex-row items-center h-11 w-[150px] md:w-full  pr-2" onClick={() => { setSelectedMenuItem('PersonalInfo') }}>
                                 <span className="inline-flex justify-center items-center ml-4">
-                                <img src={person} className="w-7 h-7 md:w-5 md:h-5" alt="" />
+                                    <img src={person} className="w-7 h-7 md:w-5 md:h-5" alt="" />
 
                                 </span>
                                 <span className="ml-2 text-sm tracking-wide truncate">Personal Information</span>
                             </a>
                         </li>
-                        <li className={`flex justify-center md:justify-start focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4  hover:border-customBrown" ${selectedMenuItem==="WishList"?'border-customBrown':'border-transparent'}`}>
-                            <a href="#" className="relative flex flex-row items-center h-11 w-[150px] md:w-full  pr-6" onClick={()=>{setSelectedMenuItem('WishList')}}>
+                        <li className={`flex justify-center md:justify-start focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4  hover:border-customBrown" ${selectedMenuItem === "WishList" ? 'border-customBrown' : 'border-transparent'}`}>
+                            <a href="#" className="relative flex flex-row items-center h-11 w-[150px] md:w-full  pr-6" onClick={() => { setSelectedMenuItem('WishList') }}>
                                 <span className="inline-flex justify-center items-center ml-4">
-                                <img src={wish} className="w-5 h-5" alt="" />
+                                    <img src={wish} className="w-5 h-5" alt="" />
                                 </span>
                                 <span className="ml-2 text-sm tracking-wide truncate">WishList</span>
                             </a>
                         </li>
-                        <li className={`flex justify-center md:justify-start focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4  hover:border-customBrown" ${selectedMenuItem==="Notifications"?'border-customBrown':'border-transparent'}`}>
-                            <a href="#" className="relative flex flex-row items-center h-11 w-[150px] md:w-full pr-6" onClick={()=>{setSelectedMenuItem('Notifications')}}>
+                        <li className={`flex justify-center md:justify-start focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4  hover:border-customBrown" ${selectedMenuItem === "Notifications" ? 'border-customBrown' : 'border-transparent'}`}>
+                            <a href="#" className="relative flex flex-row items-center h-11 w-[150px] md:w-full pr-6" onClick={() => { setSelectedMenuItem('Notifications') }}>
                                 <span className="inline-flex justify-center items-center ml-4">
-                                <img src={order} className="w-5 h-5" alt="" />
+                                    <img src={cart} className="w-5 h-5" alt="" />
                                 </span>
                                 <span className="ml-2 text-sm tracking-wide truncate">Cart</span>
                             </a>
                         </li>
-                        <li className={`flex justify-center md:justify-start focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4  hover:border-customBrown" ${selectedMenuItem==="Orders"?'border-customBrown':'border-transparent'}`}>
-                            <a href="#" className="relative flex flex-row items-center h-11 w-[150px] md:w-full pr-6" onClick={()=>{setSelectedMenuItem('Orders')}}>
-                            <span className="inline-flex justify-center items-center ml-4">
-                            <img src={order} className="w-5 h-5" alt="" />
-                            </span>
+                        <li className={`flex justify-center md:justify-start focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4  hover:border-customBrown" ${selectedMenuItem === "Orders" ? 'border-customBrown' : 'border-transparent'}`}>
+                            <a href="#" className="relative flex flex-row items-center h-11 w-[150px] md:w-full pr-6" onClick={() => { setSelectedMenuItem('Orders') }}>
+                                <span className="inline-flex justify-center items-center ml-4">
+                                    <img src={order} className="w-5 h-5" alt="" />
+                                </span>
                                 <span className="ml-2 text-sm tracking-wide truncate">Orders</span>
                             </a>
                         </li>
 
-                        
+
 
                         <li className="flex justify-center md:justify-start focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-customBrown">
-                            <a href="#" className="relative flex flex-row items-center h-11 w-[150px] md:w-full pr-6" onClick={()=>{alert('log out')}}>
+                            <a href="#" className="relative flex flex-row items-center h-11 w-[150px] md:w-full pr-6">
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                                 </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">Logout</span>
+                                <button onClick={isAuthenticated ? () => { dispatch(logout()) } : () => {
+                                    
+                                }}> <span className="ml-2 text-sm tracking-wide truncate">Logout</span> </button>
                             </a>
                         </li>
                     </ul>

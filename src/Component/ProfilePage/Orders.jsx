@@ -1,95 +1,127 @@
-import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import '../Checkout/Cart/scroll.css'
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import makeRequestWithToken from "../../helper/makeRequestWithToken";
+import { selectEmail } from "../slices/authSlice";
+import { useSelector } from "react-redux";
+import formatIndianCurrency from "../../helper/formatIndianCurrency";
 
 export default function OrderHistory() {
+  const email = useSelector(selectEmail);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await makeRequestWithToken("/verifiedUsers/orders", "POST", { email });
+        if (response?.data?.orders) {
+          setOrders(response.data.orders);
+        } else {
+          setOrders([]); // Ensure orders is an empty array if no data is returned
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        setLoading(false);
+      }
+    };
+    fetchOrders();
+  }, [email]);
+
+  if (loading) {
+    return <div className="flex h-full w-screen justify-center items-center">Loading...</div>;
+  }
+
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white overflow-x-auto" id='style-2'>
-      <h1 className="text-2xl font-bold mb-4">Order History</h1>
-      <p className="mb-8">
-        Check the status of recent orders, manage returns, and discover similar products.
-      </p>
-      <div className="space-y-12"> {/* Increased the space between items */}
-        <div className="border rounded-lg p-4">
-          <div className="flex justify-between items-center mb-4">
-            <div>
-              <div className="text-sm text-gray-500">Order number</div>
-              <div>WU88191111</div>
-            </div>
-            <div>
-              <div className="text-sm text-gray-500">Date placed</div>
-              <div>Jul 6, 2021</div>
-            </div>
-            <div>
-              <div className="text-sm text-gray-500">Total amount</div>
-              <div>$160.00</div>
-            </div>
-            <div className="flex space-x-2">
-              <button className=" hover:bg-gray-100"><span className="border px-4 py-2 rounded-md">View Order</span></button>
-              <button className=" hover:bg-gray-100"><span className="px-4 py-2 border rounded-md">View Invoice</span></button>
-            </div>
+    <section className="flex justify-center pt-20 bg-white overflow-x-auto w-full md:w-[900px]" id="style-2">
+      <div className="max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+        <h1 className="font-manrope font-bold text-xl min-[400px]:text-2xl text-black mb-8 text-left">Order History</h1>
+        <p className="mb-8 text-gray-600">Check the status of recent orders and manage returns.</p>
+
+        {orders.length === 0 ? (
+          <div className="flex justify-center items-center h-[50vh] w-full">No records found</div>
+        ) : (
+          <div className="space-y-12">
+            {orders.map((order, index) => (
+              <div key={index} className="border rounded-lg p-6 shadow-sm bg-gray-50">
+                <div className="flex justify-between items-center mb-4 text-gray-800">
+                  <div>
+                    <div className="text-sm text-gray-500">Order number</div>
+                    <div className="font-medium">{order.invoice.invoiceNumber}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500">Date placed</div>
+                    <div className="font-medium">
+                      {new Date(order.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500">Total amount</div>
+                    <div className="font-medium">
+                      {formatIndianCurrency(
+                        order.product.reduce((sum, item) => sum + item.price, 0) * 1.15 + 500
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex space-x-2">
+                    <button className="border px-4 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
+                      View Order
+                    </button>
+                    <button className="border px-4 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
+                      View Invoice
+                    </button>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  {order.product.map((item, idx) => (
+                    <div key={idx} className="flex items-start space-x-4 p-3 bg-white rounded-md shadow-sm">
+                      <img
+                        alt={item.name}
+                        className="h-32 w-32 rounded-md border object-cover"
+                        src={item.images[0]}
+                      />
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-800">{item.name}</h3>
+                        <p
+                          className="text-sm text-gray-600 mt-1"
+                          style={{
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {item.description}
+                        </p>
+                        <div className="text-sm text-gray-700 mt-2 font-medium">
+                          {formatIndianCurrency(item.price)}
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end">
+                        <span className="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-xs">
+                          Delivery is in Transit
+                        </span>
+                        <Link to={`/product-detail/${item._id}`} target="_blank">
+                          <button className="mt-2 px-4 py-2 text-blue-600 text-sm hover:underline">
+                            View Product
+                          </button>
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="space-y-6"> {/* Increased the space between items */}
-            <div className="flex items-start space-x-4">
-              <img
-                alt="Micro Backpack"
-                className="h-32 w-32" 
-                height="96"
-                src="https://theantiquestory.com/cdn/shop/products/IMG_2160-as-Smart-Object-1_540x.jpg?v=1540320931 "
-                style={{
-                  aspectRatio: "96/96",
-                  objectFit: "cover",
-                }}
-                width="96"
-              />
-              <div className="flex-1">
-                <h3 className="font-bold">Micro Backpack</h3>
-                <p className="text-sm text-gray-600">
-                  Are you a minimalist looking for a compact carry option? The Micro Backpack is the perfect size for
-                  your essential everyday carry items. Wear it like a backpack or carry it like a satchel for all-day
-                  use.
-                </p>
-                <div className="text-sm text-gray-500 mt-2">$70.00</div>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="px-3 py-1 bg-gray-200 text-gray-800 rounded-full">Delivered on July 12, 2021</span>
-              <div className="flex space-x-2">
-                <button className="px-4 py-2 hover:underline">View product</button>
-              </div>
-            </div>
-            <div className="mt-32 flex items-start space-x-4">
-              <img
-                alt="Nomad Shopping Tote"
-                className="h-32 w-32" 
-                height="96"
-                src="https://theantiquestory.com/cdn/shop/products/IMG_2160-as-Smart-Object-1_540x.jpg?v=1540320931 "
-                style={{
-                  aspectRatio: "96/96",
-                  objectFit: "cover",
-                }}
-                width="96"
-              />
-              <div className="flex-1">
-                <h3 className="font-bold">Nomad Shopping Tote</h3>
-                <p className="text-sm text-gray-600">
-                  This durable shopping tote is perfect for the world traveler. Its yellow canvas construction is water,
-                  fray, tear resistant. The matching handle, backpack straps, and shoulder loops provide multiple carry
-                  options for a day out on your next adventure.
-                </p>
-                <div className="text-sm text-gray-500 mt-2">$90.00</div>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="px-3 py-1 bg-gray-200 text-gray-800 rounded-full">Delivered on July 12, 2021</span>
-              <div className="flex space-x-2">
-                <button className="px-4 py-2 hover:underline">View product</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      
+        )}
+        <div className="h-[50px]"></div>
       </div>
-    </div>
+    </section>
   );
 }

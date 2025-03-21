@@ -21,7 +21,7 @@ export default function ShoppingGrid() {
 
       const query = searchParams.get('category');
       setCategory(query);
-      const response = await axios.get(`http://localhost:5000/api/products?category=${query}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/products?category=${query}`);
       
       setProducts(response.data);
       

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAsync, selectLoading, selectIsAuthenticated, selectError } from '../slices/authSlice';
+import logo from '../Assets/logo.png'
 
 const Login = () => {
 
@@ -18,8 +19,6 @@ const Login = () => {
 
   const emailRegex = /^[a-zA-Z0-9+_.-]{4,}@[a-zA-Z0-9-]+\.[a-zA-Z0-9.]{2,5}$/;
   const passwordRegex = /[\w@#$%&*()_]{7,20}/;
-
-  console.log(currentUrl);
 
   const validate = () => {
     const newErrors = {};
@@ -59,7 +58,7 @@ const Login = () => {
       <div className="flex justify-center">
         <div className="lg:w-[30vw] md:w-[40vw] w-[90vw] mb-10 bg-[#f9f5eb] rounded-l-md p-6 flex flex-col">
           <div className="text-center">
-            <img src='https://theantiquestory.com/cdn/shop/files/theantiquestory.com_indian_antiques_online_antiques_110x.png?v=1613692414' alt="logo" className="mt-3 h-24 mx-auto" />
+            <img src={logo} alt="logo" className="mt-3 h-24 mx-auto" />
             <h4 className="mt-2 mb-5 pb-1 text-xl font-semibold">We are The Antique Team</h4>
           </div>
           <p className='text-sm text-center mt-4 mb-4'>Please login to your account</p>

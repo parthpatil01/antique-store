@@ -1,9 +1,14 @@
 
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector } from "react-redux";
+import { selectEmail } from "../slices/authSlice";
+import makeRequestWithToken from "../../helper/makeRequestWithToken";
 
 export default function PersonalInfo() {
+
+  const email = useSelector(selectEmail);
 
   const [userInfo, setUserInfo] = useState({
     firstName: '',
@@ -27,13 +32,15 @@ export default function PersonalInfo() {
         }));
       })
       .catch((error) => {
+        setUserInfo({});
         console.error('Error fetching user information:', error);
       });
   }, []);
 
   const fetchUserInfoFromServer = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/users"); // Replace '/api/userinfo' with your actual endpoint
+     
+      const response = await makeRequestWithToken('/users', 'POST', {email} );
       return response.data;
     } catch (error) {
       console.error('Failed to fetch user information:', error);
@@ -53,17 +60,19 @@ export default function PersonalInfo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(userInfo)
+      console.log(userInfo);
       // Send the form data to the server for processing
-      const response = await axios.post('http://localhost:5000/api/users/update-user', userInfo); // Replace '/api/saveUserInfo' with your actual endpoint
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/update-user`, userInfo); // Replace '/api/saveUserInfo' with your actual endpoint
       if (response.status === 200) {
         console.log('User information saved successfully');
+        // Notification for successful save
+        alert('Your information has been saved successfully!');
         // Optionally, you can reset the form fields after successful submission
         setUserInfo({
           firstName: userInfo.firstName,
           lastName: userInfo.lastName,
           email: userInfo.email,
-          phone:userInfo.phone,
+          phone: userInfo.phone,
           country: userInfo.country,
           streetAddress: userInfo.streetAddress,
           city: userInfo.city,
@@ -78,6 +87,7 @@ export default function PersonalInfo() {
     } catch (error) {
       console.error('Failed to save user information:', error);
       // Handle the error case, display an error message to the user or handle it as per your UI/UX design
+      alert('Failed to save user information. Please try again.');
     }
   };
 
@@ -93,7 +103,7 @@ export default function PersonalInfo() {
             </p>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              
+
 
               <div className="col-span-full">
                 <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">
@@ -124,7 +134,7 @@ export default function PersonalInfo() {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="first-name"
+                    name="firstName"
                     id="first-name"
                     autoComplete="given-name"
                     value={userInfo.firstName}
@@ -141,7 +151,7 @@ export default function PersonalInfo() {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="last-name"
+                    name="lastName"
                     id="last-name"
                     value={userInfo.lastName}
                     onChange={handleChange}
@@ -275,8 +285,8 @@ export default function PersonalInfo() {
             </div>
           </div>
 
-          
-          
+
+
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
