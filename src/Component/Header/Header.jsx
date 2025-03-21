@@ -23,8 +23,8 @@ function Header() {
   const navigation = [
     { name: "Home", to: "/", current: location.pathname === "/" },
     { name: "Shop", to: "/shop", current: location.pathname.startsWith("/shop") },
-    { name: "Our Story", to: "/our-story", current: location.pathname === "/our-story" },
-    { name: "About", to: "/about", current: location.pathname === "/about" },
+    { name: "Our Story", to: "/", current: location.pathname === "/our-story" },
+    { name: "About", to: "/", current: location.pathname === "/about" },
   ];
 
   const handleLogout = () => {
