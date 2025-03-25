@@ -1,10 +1,7 @@
 import React from "react";
-import { TECarousel, TECarouselItem } from "tw-elements-react";
-import img1 from '../Assets/img_1.jpg';
-import img2 from '../Assets/img_2.jpg';
-import img3 from '../Assets/img_3.jpg';
 import img4 from '../Assets/img_4.webp';
 import img5 from '../Assets/img_5.webp';
+import OptimizedCarousel from './OptimisedCarousel';
 
 import '../MainPage/MainPage.css';
 
@@ -17,63 +14,7 @@ export default function CarouselSlidesOnly() {
 
   return (
     <>
-      <TECarousel ride="carousel" pause={false} interval={4000}>
-        <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
-          <TECarouselItem
-            itemID={1}
-            className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-          >
-            <div className="relative">
-              <img
-                src={img1}
-                className="block w-[100vw]"
-                alt="img2"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-            </div>
-
-            <div className="absolute inset-x-[15%] inset-y-[40%] hidden py-5 text-center text-white md:block ">
-              <h5 className="text-font" >Art and craft as old as civilization</h5>
-            </div>
-
-          </TECarouselItem>
-
-          <TECarouselItem
-            itemID={2}
-            className="relative float-left hidden -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-          >
-            <div className="relative">
-              <img
-                src={img2}
-                className="block w-[100vw]"
-                alt="img2"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-            </div>
-
-
-            <div className="absolute inset-x-[15%] inset-y-[40%] hidden py-5 text-center text-white md:block ">
-              <h5 className="text-font" >Stories of monks and kings</h5>
-            </div>
-          </TECarouselItem>
-          <TECarouselItem
-            itemID={3}
-            className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-          >
-            <div className="relative">
-              <img
-                src={img3}
-                className="block w-[100vw]"
-                alt="img2"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-            </div>
-            <div className="absolute inset-x-[15%] inset-y-[40%] hidden py-5 text-center text-white md:block">
-              <h5 className="text-font">Five thousand years of unbroken legacy</h5>
-            </div>
-          </TECarouselItem>
-        </div>
-      </TECarousel>
+      <OptimizedCarousel />
 
       <section className="flex md:w-[50vw]">
         <div className="mx-auto my-5 py-10 px-4 text-title">

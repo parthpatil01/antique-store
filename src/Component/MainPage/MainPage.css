@@ -10,3 +10,27 @@
 .text-title{
   font-family: "Open Sans", sans-serif;
 }
+
+/* Fix for slick-carousel dots */
+.slick-dots li button:before {
+  color: white;
+  opacity: 0.5;
+}
+
+.slick-dots li.slick-active button:before {
+  color: white;
+  opacity: 1;
+}
+
+/* Prevent layout shift */
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Optimize image rendering */
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
